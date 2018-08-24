@@ -17,6 +17,10 @@
 #   this list of conditions and the following disclaimer in the documentation
 #   and/or other materials provided with the distribution.
 #
+# * Neither the name of the copyright holder nor the names of its
+#   contributors may be used to endorse or promote products derived from
+#   this software without specific prior written permission.
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -29,7 +33,29 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-from .Error import *
-from .OS import *
-from .RandomSeed import *
-from .TimeStamp import *
+import os
+
+import Error
+
+
+class RandomSeed():
+    """
+    Class for handling of random seeds
+    """
+    def __init__(self):
+        # Use string with 8 random bytes
+        self._random_seed_size = 8
+        self._random_seed = os.urandom(self._random_seed_size)
+            
+    def get(self):
+        """
+        Returns the random state
+        """
+        return self._random_seed
+    
+    def refresh(self):
+        try:
+            self._random_seed = os.urandom(self._random_seed_size)
+        except NotImplementedError:
+            err_msg = "ERROR: Unable to get random seed from operating system"
+            raise Error.Error(msg=err_msg)
