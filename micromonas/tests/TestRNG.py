@@ -17,6 +17,10 @@
 #   this list of conditions and the following disclaimer in the documentation
 #   and/or other materials provided with the distribution.
 #
+# * Neither the name of the copyright holder nor the names of its
+#   contributors may be used to endorse or promote products derived from
+#   this software without specific prior written permission.
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -29,10 +33,34 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-from .Compatibility import *
-from .Error import *
-from .OS import *
-from .Platform import *
-from .RandomSeed import *
-from .RNG import *
-from .TimeStamp import *
+import nose.tools
+
+import RNG
+
+
+class TestRNG():
+    """ 
+    A class for testing the handling of random numbers in micromonas
+    """
+    def __init__(self):
+        self._rng = RNG.RNG()
+
+    @classmethod
+    def setup_class(self):
+        pass
+ 
+    @classmethod
+    def teardown_class(self):
+        pass
+
+    def rand_int_1st_test(self):
+        a = -2
+        b = 8
+        r = self._rng.rand_int(a, b)
+        nose.tools.assert_greater_equal(r, a)
+        nose.tools.assert_less_equal(r, b)
+
+    def rand_float_1st_test(self):
+        r = self._rng.rand_float()
+        nose.tools.assert_greater_equal(r, 0.0)
+        nose.tools.assert_less(r, 1.0)
