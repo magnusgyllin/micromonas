@@ -31,5 +31,6 @@
 
 from .Error import *
 from .OS import *
+from .Platform import *
 from .RandomSeed import *
 from .TimeStamp import *
