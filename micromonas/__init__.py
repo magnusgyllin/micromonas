@@ -31,6 +31,7 @@
 
 from .Compatibility import *
 from .Error import *
+from .LogFile import *
 from .OS import *
 from .Platform import *
 from .RandomSeed import *
